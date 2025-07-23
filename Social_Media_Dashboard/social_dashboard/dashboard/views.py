@@ -123,7 +123,6 @@ def accounts_view(request):
         profile.save()
 
     return render(request, 'dashboard/accounts.html', {'profile': profile})
-    
 
 
 # Posts View
