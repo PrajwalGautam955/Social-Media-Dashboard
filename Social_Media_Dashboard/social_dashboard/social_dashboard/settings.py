@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hef#ovi&3#9ssomu$ud(=^xnvdo@%=o6fs&)mwo(&aybg#j^&+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Change to False in production
+DEBUG = True  # Change to False in production
 
 ALLOWED_HOSTS = ['13.48.149.223','socialdashboard.live']  # Add domain or IP as needed
 
