@@ -1,0 +1,174 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Post Page{% endblock %}
+
+{% block extra_css %}
+<style>
+  h2 {
+    text-align: center;
+    color: #1e3a8a;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+    padding: 0 20px;
+  }
+
+  .card {
+    border-radius: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffffff, #f0f4ff);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .card h3 {
+    font-size: 1.4rem;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    color: #374151;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .btn-connect {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+
+  .btn-connect:hover {
+    transform: scale(1.05);
+  }
+
+  .btn-connect.like {
+    background-color: #1DA1F2; /* Twitter Blue */
+  }
+
+  .btn-connect.comment {
+    background-color: #1877F2; /* Facebook Blue */
+  }
+
+  .btn-connect.view {
+    background-color: #8e44ad;
+  }
+
+  .btn-connect.view:hover {
+    background-color: #732d91;
+  }
+
+  .create-post {
+    text-align: center;
+    margin-top: 50px;
+    background: linear-gradient(145deg, #e3f2fd, #ffffff);
+    padding: 30px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .create-post h3 {
+    font-size: 1.5rem;
+    color: #1e3a8a;
+    margin-bottom: 20px;
+  }
+
+  .create-post textarea {
+    width: 90%;
+    max-width: 700px;
+    height: 100px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    resize: vertical;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    transition: border-color 0.3s;
+  }
+
+  .create-post textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .create-post button {
+    margin-top: 20px;
+    background-color: #00b894;
+    color: white;
+    padding: 10px 20px;
+  }
+
+  .create-post button:hover {
+    background-color: #019875;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>📣 Your Social Media Posts</h2>
+
+<div class="card-grid">
+  <!-- Twitter Post -->
+  <div class="card">
+    <h3>🐦 Twitter Post</h3>
+    <p>“This is a sample tweet from your Twitter feed.”</p>
+    <p><strong>Likes:</strong> 10 | <strong>Comments:</strong> 2</p>
+    <button class="btn-connect like">Like</button>
+    <button class="btn-connect comment">Comment</button>
+    <br>
+    <a href="{% url 'view_post' %}">
+      <button class="btn-connect view">👁️ View Post</button>
+    </a>
+  </div>
+
+  <!-- Facebook Post -->
+  <div class="card">
+    <h3>📘 Facebook Post</h3>
+    <p>“This is a mock Facebook post you shared.”</p>
+    <p><strong>Likes:</strong> 5 | <strong>Comments:</strong> 1</p>
+    <button class="btn-connect like">Like</button>
+    <button class="btn-connect comment">Comment</button>
+    <br>
+    <a href="{% url 'view_post' %}">
+      <button class="btn-connect view">👁️ View Post</button>
+    </a>
+  </div>
+</div>
+
+<!-- Create Post -->
+<div class="create-post">
+  <h3>✨ Create New Post</h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea name="post_content" placeholder="What's on your mind?" required></textarea><br>
+
+    <label for="media">Upload Image or Video</label><br>
+    <input type="file" name="media" accept="image/*,video/*"><br>
+    <small style="color: #666;">Supported formats: JPG, PNG, MP4, MOV</small><br><br>
+
+    <button type="submit" class="btn-connect">Post to All Platforms</button>
+  </form>
+</div>
+{% endblock %}

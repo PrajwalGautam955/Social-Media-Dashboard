@@ -1,0 +1,110 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}View Post{% endblock %}
+
+{% block extra_css %}
+<style>
+  .post-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .post-header {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+  }
+
+  .username {
+    font-weight: 600;
+    color: #262626;
+  }
+
+  .post-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+
+  .post-actions {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+  }
+
+  .post-actions img {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    cursor: pointer;
+  }
+
+  .post-likes {
+    font-weight: 600;
+    padding: 0 14px;
+    margin-top: 5px;
+    color: #262626;
+  }
+
+  .post-caption {
+    padding: 10px 14px;
+    color: #262626;
+  }
+
+  .post-caption span {
+    font-weight: 600;
+    margin-right: 5px;
+  }
+
+  .post-time {
+    font-size: 12px;
+    color: #8e8e8e;
+    padding: 0 14px 12px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="post-container">
+  <div class="post-header" style="display: flex; align-items: center; gap: 10px;">
+  <img 
+    src="https://media.licdn.com/dms/image/v2/D5635AQEMc7I-SO9TbA/profile-framedphoto-shrink_400_400/B56ZbaWs5kGoAc-/0/1747420106875?e=1753797600&v=beta&t=uzrb52KeBx8XbIUMh9M2Ze1N6q8LInJiKQtebZ6U-hI" 
+    alt="Profile picture of JohnDoe" 
+    class="user-avatar" 
+    style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;"
+  >
+  <div class="username" style="font-weight: bold; font-size: 1.1rem;">Prajwal Gautam</div>
+</div>
+
+
+  <img src="https://media.licdn.com/dms/image/v2/D5635AQEMc7I-SO9TbA/profile-framedphoto-shrink_400_400/B56ZbaWs5kGoAc-/0/1747420106875?e=1753797600&v=beta&t=uzrb52KeBx8XbIUMh9M2Ze1N6q8LInJiKQtebZ6U-hI" alt="Post" class="post-image">
+
+  <div class="post-actions">
+    <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Like">
+    <img src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png" alt="Comment">
+    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Share">
+  </div>
+
+  <div class="post-likes">122 likes</div>
+
+  <div class="post-caption"> 
+  <span>Prajwal Gautam</span> Django Assignment ❤️ 💻
+</div>
+
+
+  <div class="post-time">Posted on July 22, 2025</div>
+</div>
+{% endblock %}

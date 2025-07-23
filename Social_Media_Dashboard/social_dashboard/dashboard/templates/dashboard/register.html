@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background-color: #0e2a47;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      width: 80%;
+      max-width: 1000px;
+      background-color: #122b45;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .left {
+      width: 50%;
+      padding: 40px;
+      background-color: #0e2a47;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .left h1 {
+      color: #00d1ff;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .left p {
+      font-size: 14px;
+      color: #c7d6e3;
+    }
+
+    .right {
+      width: 50%;
+      background-color: #1b3a57;
+      padding: 40px 30px;
+    }
+
+    .right h2 {
+      color: #00d1ff;
+      margin-bottom: 25px;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    form button {
+      background: #00d1ff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    form button:hover {
+      background: #00b3e6;
+    }
+
+    .login-link {
+      margin-top: 20px;
+      display: block;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="left">
+  <img src="https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png" width="100" alt="Logo">
+  <h1>Welcome Page</h1>
+  <p>Create your account and manage your social dashboard</p>
+</div>
+
+  <div class="right">
+    <h2>Create An Account</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Create Account</button>
+    </form>
+    <span class="login-link">Already have an account? <a href="{% url 'login' %}">Login</a></span>
+  </div>
+</div>
+
+</body>
+</html>

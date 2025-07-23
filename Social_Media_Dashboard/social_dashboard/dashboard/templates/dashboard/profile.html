@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Profile</title>
+  {% load static %}
+  <style>
+    :root {
+      --primary: #4e89ff;
+      --primary-dark: #3461c1;
+      --bg-light: #f4f6f8;
+      --text-dark: #2c3e50;
+      --card-bg: #ffffff;
+      --sidebar-bg: #1e293b;
+      --sidebar-hover: #334155;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-light);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      background: var(--sidebar-bg);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 30px 20px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 40px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .sidebar a {
+      width: 100%;
+      display: block;
+      color: #cbd5e1;
+      text-decoration: none;
+      margin: 12px 0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: var(--sidebar-hover);
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      padding: 40px;
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .profile-header h2 {
+      font-size: 26px;
+      color: var(--text-dark);
+    }
+
+    .profile-header p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .card img {
+      width: 60px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: var(--text-dark);
+    }
+
+    .card input[type="text"],
+    .card input[type="file"] {
+      width: 90%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .card input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    /* Buttons */
+    .btn-connect {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-connect:hover {
+      background-color: var(--primary-dark);
+      transform: scale(1.03);
+    }
+
+    .logout-link {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .logout-link a {
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .logout-link a:hover {
+      color: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>📊 My Dashboard</h2>
+  <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
+  <a href="{% url 'accounts' %}">🔗 Accounts</a>
+  <a href="{% url 'post' %}">📝 Post</a>
+  <a href="{% url 'profile' %}">👤 Profile</a>
+  <a href="{% url 'logout' %}">🚪 Logout</a>
+</div>
+
+<div class="main-content">
+  <div class="profile-header">
+    <h2>Welcome, {{ request.user.username }}</h2>
+    <p>Email: {{ request.user.email }}</p>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card-grid">
+
+      <!-- Profile Picture -->
+     <div class="card"> 
+  <img src="https://www.svgrepo.com/show/408476/user-person-profile-block-account-circle.svg" alt="Profile Icon" style="width: 100px; height: 100px;">
+  <h3>Profile Picture</h3>
+  <input type="file" name="profile_picture">
+</div>
+
+
+      <!-- Twitter API Key -->
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+        <h3>Twitter API</h3>
+        <input type="text" name="twitter_api_key" value="{{ profile.twitter_api_key }}">
+        <button class="btn-connect" type="submit">Connect Profile</button>
+      </div>
+
+      <!-- Facebook API Key -->
+      <!-- Facebook Login Button -->
+<div class="card">
+  <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook" width="60" height="60">
+  <h3>Login with Facebook</h3>
+  
+  <!-- Facebook login link from Django -->
+  <a href="{% url 'social:begin' 'facebook' %}" class="btn-connect">Login with Facebook</a>
+</div>
+
+
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <button type="submit" class="btn-connect">💾 Save Changes</button>
+    </div>
+  </form>
+
+  <div class="logout-link">
+    <a href="{% url 'logout' %}">🚪 Logout</a>
+  </div>
+</div>
+
+</body>
+</html>

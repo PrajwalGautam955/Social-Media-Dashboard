@@ -1,0 +1,154 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .dashboard-container {
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+    color: #1e3a8a;
+    margin-bottom: 10px;
+  }
+
+  .header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  .stat-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+  }
+
+  .box {
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .box:hover {
+    transform: scale(1.05);
+  }
+
+  .box h3 {
+    color: #0077cc;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .box p {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+  }
+
+  canvas {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+    padding: 25px;
+  }
+
+  @media (max-width: 768px) {
+    .header h1 {
+      font-size: 2rem;
+    }
+    .header p {
+      font-size: 1rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  <div class="header">
+    <h1>Welcome, {{ request.user.username }}</h1>
+    <p>📊 Your Social Media Insights at a Glance</p>
+  </div>
+
+  <div class="stat-boxes">
+    <div class="box">
+      <h3>👥 Followers</h3>
+      <p>8,124</p>
+    </div>
+    <div class="box">
+      <h3>❤️ Likes</h3>
+      <p>42,321</p>
+    </div>
+    <div class="box">
+      <h3>💬 Comments</h3>
+      <p>1,264</p>
+    </div>
+    <div class="box">
+      <h3>🔄 Shares</h3>
+      <p>803</p>
+    </div>
+  </div>
+
+  <canvas id="followersChart" width="400" height="120"></canvas>
+</div>
+
+<script>
+  const ctx = document.getElementById('followersChart').getContext('2d');
+  const followersChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        label: '📈 New Followers',
+        data: [120, 150, 180, 240, 200, 300],
+        backgroundColor: 'rgba(78, 137, 255, 0.2)',
+        borderColor: '#4e89ff',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#4e89ff',
+        pointBorderColor: '#fff',
+        pointRadius: 5,
+        pointHoverRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          labels: {
+            color: '#333',
+            font: {
+              size: 14
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false }
+        },
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: '#e0e0e0'
+          }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}
