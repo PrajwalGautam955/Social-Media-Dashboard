@@ -12,10 +12,7 @@ urlpatterns = [
     path('post/', views.posts_view, name='post'),
     path('api/fetch-posts/', views.fetch_social_posts, name='fetch_social_posts'),
     path('post/view/<int:post_id>/', views.view_post, name='view_post2'),
-    # path('view_post/', views.view_post, name='view_post'),
-    # path('create-post/', views.create_post_view, name='create_post'),
 
-    # ✅ Include social_django URLs both at root and at 'auth/'
-    path('', include('social_django.urls', namespace='prajwalsocial')),
+    # ✅ Include social_django URLs only once
     path('auth/', include('social_django.urls', namespace='prajwalsocial')),
 ]
