@@ -93,4 +93,5 @@ def posts_view(request):
             Post.objects.create(user=request.user, content=content)
             messages.success(request, 'Post created successfully.')
             return redirect('post')
-    posts = Post.objects.filter(user=request.user).order_by('-created_a
+    posts = Post.objects.filter(user=request.user).order_by('-created_at')
+
