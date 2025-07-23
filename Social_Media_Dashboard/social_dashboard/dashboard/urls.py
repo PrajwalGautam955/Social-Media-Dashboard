@@ -11,6 +11,7 @@ urlpatterns = [
     path('accounts/', views.accounts_view, name='accounts'),
     path('post/', views.posts_view, name='post'),
     path('api/fetch-posts/', views.fetch_social_posts, name='fetch_social_posts'),
+
     path('post/view/<int:post_id>/', views.view_post, name='view_post2'),
 
     # ✅ Include social_django URLs only once
