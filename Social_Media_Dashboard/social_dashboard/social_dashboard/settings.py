@@ -103,7 +103,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files# <- Correct filesystem path
+# Static files#
 
 # Media files
 MEDIA_URL = '/media/'
