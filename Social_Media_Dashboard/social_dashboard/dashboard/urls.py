@@ -16,6 +16,6 @@ urlpatterns = [
     path('create-post/', views.create_post_view, name='create_post'),
 
     # ✅ Include social_django URLs both at root and at 'auth/'
-    path('', include('social_django.urls', namespace='prajwalsocial')),
-    path('auth/', include('social_django.urls', namespace='prajwalsocial')),
+    # path('', include('social_django.urls', namespace='prajwalsocial')),
+    # path('auth/', include('social_django.urls', namespace='prajwalsocial')),
 ]
