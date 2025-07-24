@@ -150,7 +150,7 @@ def posts_view(request):
 
 # Handle and Store the Access Token
 @login_required
-# @csrf_exempt
+
 def facebook_callback(request):
     code = request.GET.get('code')
     if not code:
