@@ -167,6 +167,7 @@ def facebook_callback(request):
     )
 
     response = requests.get(token_url)
+    print("access token:" , response)
     data = response.json()
     access_token = data.get('EAAZAggnshCJ8BPLoNE6zRx6uUJ6RvHI6zwTFcW0Q058EAF6575XhJT27BUMDVKuHzIk6lw04FL7zntp8gtyg2tYGgUUxODNNSKK2KBfVJKhdGZAh0eVDO1xvRVj3YJBkKGXfQRgFcyo4Y7UhIwXXtuGyOm4kEduMZCv4E8IqrG14tymZCxr1aGFiDvXAMHRywZBO1ZCmGtpZCtYAm0dcWCCrZCwe7gOjoZCoatEbl')
 
@@ -176,7 +177,7 @@ def facebook_callback(request):
         profile.save()
 
     return redirect('dashboard')
-
+    
 
 
 
