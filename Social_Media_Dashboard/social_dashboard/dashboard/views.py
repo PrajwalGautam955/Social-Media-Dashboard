@@ -13,21 +13,42 @@ from django.http import JsonResponse
 from .models import Post
 
 
+# Profile View
 @login_required
-def posts_view(request):
-    if request.method == 'POST':
-        content = request.POST.get('post_content')
-        if content:
-            Post.objects.create(user=request.user, content=content)
-            messages.success(request, 'Post created successfully.')
-            return redirect('dashboard')
-    posts = Post.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'dashboard/post.html', {'posts': posts})
+def profile(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
 
-@login_required
-def view_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    return render(request, 'dashboard/view_post.html', {'post': post})
+    if request.method == 'POST':
+        facebook_key = request.POST.get('facebook_api_key')
+        # Instagram API key is removed — using login instead
+
+        if facebook_key is not None:
+            profile.facebook_api_key = facebook_key
+
+        if request.FILES.get('profile_picture'):
+            profile.profile_picture = request.FILES.get('profile_picture')
+
+        profile.save()
+        messages.success(request, 'Profile updated successfully.')
+        return redirect('profile')
+
+    return render(request, 'dashboard/profile.html', {'profile': profile})
+
+# @login_required
+# def posts_view(request):
+#     if request.method == 'POST':
+#         content = request.POST.get('post_content')
+#         if content:
+#             Post.objects.create(user=request.user, content=content)
+#             messages.success(request, 'Post created successfully.')
+#             return redirect('dashboard')
+#     posts = Post.objects.filter(user=request.user).order_by('-created_at')
+#     return render(request, 'dashboard/post.html', {'posts': posts})
+
+# @login_required
+# def view_post(request, post_id):
+#     post = get_object_or_404(Post, id=post_id)
+#     return render(request, 'dashboard/view_post.html', {'post': post})
 
 
 
