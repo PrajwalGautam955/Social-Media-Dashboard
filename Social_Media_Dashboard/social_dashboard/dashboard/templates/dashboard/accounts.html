@@ -91,6 +91,146 @@
 
 <div class="card-grid">
 
+  <!-- Instagram Card -->
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram Icon">
+    <h3>Instagram Account</h3>
+    {% if profile.instagram_api_key %}
+      <p class="connected">Connected ✅</p>
+      <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="disconnect" value="instagram">
+        <button class="btn-connect" type="submit">Disconnect</button>
+      </form>
+    {% else %}
+      <p class="disconnected">Not Connected ❌</p>
+      <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="instagram_api_key" placeholder="Enter Instagram API Key" required>
+        <button class="btn-connect" type="submit">Connect</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <!-- Facebook Card -->
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook Icon">
+    <h3>Facebook Account</h3>
+    {% if profile.facebook_api_key %}
+      <p class="connected">Connected ✅</p>
+      <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="disconnect" value="facebook">
+        <button class="btn-connect" type="submit">Disconnect</button>
+      </form>
+    {% else %}
+      <p class="disconnected">Not Connected ❌</p>
+      <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="facebook_api_key" placeholder="Enter Facebook API Key" required>
+        <button class="btn-connect" type="submit">Connect</button>
+      </form>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}
+
+
+
+<!-- {% extends 'dashboard/base.html' %}
+{% block title %}Connected Accounts{% endblock %}
+
+{% block extra_css %}
+<style>
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+  }
+
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #1e3a8a;
+  }
+
+  .card p {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .card input[type="text"] {
+    padding: 10px;
+    width: 85%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+  }
+
+  .card input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .btn-connect {
+    padding: 10px 20px;
+    background-color: #4e89ff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-connect:hover {
+    background-color: #3461c1;
+  }
+
+  .connected {
+    color: green;
+  }
+
+  .disconnected {
+    color: red;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom: 30px; text-align: center; font-size: 26px; color: #2c3e50;">🔗 Connected Accounts</h2>
+
+<div class="card-grid">
+
   <!-- Twitter Card -->
   <div class="card">
     <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter Icon">
@@ -135,3 +275,4 @@
 
 </div>
 {% endblock %}
+ -->
