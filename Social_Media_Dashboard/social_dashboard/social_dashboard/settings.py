@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-hef#ovi&3#9ssomu$ud(=^xnvdo@%=o6fs&)mwo(&aybg#j^&+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['13.48.149.223','https://555cf4cdab50.ngrok-free.app']
+ALLOWED_HOSTS = ['13.48.149.223','555cf4cdab50.ngrok-free.app']
 
 
 LOGIN_REDIRECT_URL = '/dashboard/'
