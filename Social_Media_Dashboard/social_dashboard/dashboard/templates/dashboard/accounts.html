@@ -136,9 +136,9 @@
 </div>
 {% endblock %}
 
+<!-- 
 
-
-<!-- {% extends 'dashboard/base.html' %}
+{% extends 'dashboard/base.html' %}
 {% block title %}Connected Accounts{% endblock %}
 
 {% block extra_css %}
@@ -230,49 +230,3 @@
 <h2 style="margin-bottom: 30px; text-align: center; font-size: 26px; color: #2c3e50;">🔗 Connected Accounts</h2>
 
 <div class="card-grid">
-
-  <!-- Twitter Card -->
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter Icon">
-    <h3>Twitter Account</h3>
-    {% if profile.twitter_api_key %}
-      <p class="connected">Connected ✅</p>
-      <form method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="disconnect" value="twitter">
-        <button class="btn-connect" type="submit">Disconnect</button>
-      </form>
-    {% else %}
-      <p class="disconnected">Not Connected ❌</p>
-      <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="twitter_api_key" placeholder="Enter Twitter API Key" required>
-        <button class="btn-connect" type="submit">Connect</button>
-      </form>
-    {% endif %}
-  </div>
-
-  <!-- Facebook Card -->
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook Icon">
-    <h3>Facebook Account</h3>
-    {% if profile.facebook_api_key %}
-      <p class="connected">Connected ✅</p>
-      <form method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="disconnect" value="facebook">
-        <button class="btn-connect" type="submit">Disconnect</button>
-      </form>
-    {% else %}
-      <p class="disconnected">Not Connected ❌</p>
-      <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="facebook_api_key" placeholder="Enter Facebook API Key" required>
-        <button class="btn-connect" type="submit">Connect</button>
-      </form>
-    {% endif %}
-  </div>
-
-</div>
-{% endblock %}
- -->
