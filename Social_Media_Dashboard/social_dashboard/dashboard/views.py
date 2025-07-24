@@ -15,6 +15,13 @@ from django.http import JsonResponse
 from .models import Post
 
 
+
+    
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Profile
+
 # Profile View
 @login_required
 def profile(request):
@@ -121,39 +128,40 @@ def view_post(request):
     return render(request, 'dashboard/view_post.html')
 
 # Accounts View
-    
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import Profile
 
 @login_required
 def accounts_view(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        disconnect_account = request.POST.get('disconnect')
-        instagram_key = request.POST.get('instagram_api_key')
-        facebook_key = request.POST.get('facebook_api_key')
+        if request.POST.get('disconnect') == 'twitter':
+            profile.twitter_api_key = ''
+            messages.success(request, 'Twitter account disconnected.')
 
-        # Handle disconnections
-        if disconnect_account == 'instagram':
-            profile.instagram_api_key = ''
-            messages.success(request, 'Instagram account disconnected.')
-        elif disconnect_account == 'facebook':
+        elif request.POST.get('disconnect') == 'facebook':
             profile.facebook_api_key = ''
             messages.success(request, 'Facebook account disconnected.')
 
-        # Handle new connections
-        if instagram_key:
-            profile.instagram_api_key = instagram_key
-            messages.success(request, 'Instagram account connected.')
+        else:
+            twitter_key = request.POST.get('twitter_api_key')
+            facebook_key = request.POST.get('facebook_api_key')
 
-        if facebook_key:
-            profile.facebook_api_key = facebook_key
-            messages.success(request, 'Facebook account connected.')
+            # Handle Twitter connection
+            if twitter_key:
+                profile.twitter_api_key = twitter_key
+                messages.success(request, 'Twitter account connected.')
+
+            # Handle Facebook connection with validation
+            if facebook_key:
+                is_valid = check_facebook_connection(facebook_key)
+                if is_valid:
+                    profile.facebook_api_key = facebook_key
+                    messages.success(request, 'Facebook account connected successfully!')
+                else:
+                    messages.error(request, 'Invalid Facebook API key. Please try again.')
 
         profile.save()
+        return redirect('accounts')  # or your actual URL name for this view
 
     return render(request, 'dashboard/accounts.html', {'profile': profile})
 
