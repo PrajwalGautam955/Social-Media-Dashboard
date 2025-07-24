@@ -146,7 +146,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://555cf4cdab50.ngrok-free.app/'  # replace with your actual ngrok domain
+    # 'https://your-ec2-public-dns',     # if you’re using EC2 public URL
+]
 
 
 
