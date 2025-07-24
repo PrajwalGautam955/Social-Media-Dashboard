@@ -56,11 +56,9 @@ def profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        twitter_key = request.POST.get('twitter_api_key')
         facebook_key = request.POST.get('facebook_api_key')
+        # Instagram API key is removed — using login instead
 
-        if twitter_key is not None:
-            profile.twitter_api_key = twitter_key
         if facebook_key is not None:
             profile.facebook_api_key = facebook_key
 
@@ -72,6 +70,8 @@ def profile(request):
         return redirect('profile')
 
     return render(request, 'dashboard/profile.html', {'profile': profile})
+
+
 
 #Create Post view
 def create_post_view(request):
