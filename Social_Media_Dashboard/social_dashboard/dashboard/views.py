@@ -132,17 +132,55 @@ def accounts_view(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        disconnect_account = request.POST.get('disconnect')
+        # Check for disconnection requests
+        if 'disconnect_instagram' in request.POST:
+            profile.instagram_api_key = ''
+            messages.success(request, 'Instagram account disconnected.')
+
+        elif 'disconnect_facebook' in request.POST:
+            profile.facebook_api_key = ''
+            messages.success(request, 'Facebook account disconnected.')
+
+        # Check for new key submissions
         instagram_key = request.POST.get('instagram_api_key')
         facebook_key = request.POST.get('facebook_api_key')
 
-        # Handle disconnections
-        if disconnect_account == 'instagram':
-            profile.instagram_api_key = ''
-            messages.success(request, 'Instagram account disconnected.')
-        elif disconnect_account == 'facebook':
-            profile.facebook_api_key = ''
-            messages.success(request, 'Facebook account disconnected.')
+        if instagram_key:
+            profile.instagram_api_key = instagram_key
+            messages.success(request, 'Instagram account connected.')
+
+        if facebook_key:
+            profile.facebook_api_key = facebook_key
+            messages.success(request, 'Facebook account connected.')
+
+        profile.save()
+
+    return render(request, 'dashboard/accounts.html', {'profile': profile})
+
+
+
+    
+# from django.contrib.auth.decorators import login_required
+# from django.shortcuts import render, redirect
+# from django.contrib import messages
+# from .models import Profile
+
+# @login_required
+# def accounts_view(request):
+#     profile, _ = Profile.objects.get_or_create(user=request.user)
+
+#     if request.method == 'POST':
+#         disconnect_account = request.POST.get('disconnect')
+#         instagram_key = request.POST.get('instagram_api_key')
+#         facebook_key = request.POST.get('facebook_api_key')
+
+#         # Handle disconnections
+#         if disconnect_account == 'instagram':
+#             profile.instagram_api_key = ''
+#             messages.success(request, 'Instagram account disconnected.')
+#         elif disconnect_account == 'facebook':
+#             profile.facebook_api_key = ''
+#             messages.success(request, 'Facebook account disconnected.')
 
         # Handle new connections
         if instagram_key:
