@@ -187,31 +187,26 @@
     <div class="card-grid">
 
       <!-- Profile Picture -->
-     <div class="card"> 
-  <img src="https://www.svgrepo.com/show/408476/user-person-profile-block-account-circle.svg" alt="Profile Icon" style="width: 100px; height: 100px;">
-  <h3>Profile Picture</h3>
-  <input type="file" name="profile_picture">
-</div>
-
-
-      <!-- Twitter API Key -->
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
-        <h3>Twitter API</h3>
-        <input type="text" name="twitter_api_key" value="{{ profile.twitter_api_key }}">
-        <button class="btn-connect" type="submit">Connect Profile</button>
+      <div class="card"> 
+        <img src="https://www.svgrepo.com/show/408476/user-person-profile-block-account-circle.svg" alt="Profile Icon" style="width: 100px; height: 100px;">
+        <h3>Profile Picture</h3>
+        <input type="file" name="profile_picture">
       </div>
 
-      <!-- Facebook API Key -->
-      <!-- Facebook Login Button -->
+      <!-- Instagram Login Button -->
 <div class="card">
-  <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook" width="60" height="60">
-  <h3>Login with Facebook</h3>
-  
-  <!-- Facebook login link from Django -->
-  <a href="{% url 'social:begin' 'facebook' %}" class="btn-connect">Login with Facebook</a>
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="60" height="60">
+  <h3>Login with Instagram</h3>
+  <a href="{% url 'social:begin' 'instagram' %}" class="btn-connect">Login with Instagram</a>
 </div>
 
+
+      <!-- Facebook Login Button -->
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook" width="60" height="60">
+        <h3>Login with Facebook</h3>
+        <a href="{% url 'social:begin' 'facebook' %}" class="btn-connect">Login with Facebook</a>
+      </div>
 
     </div>
 
