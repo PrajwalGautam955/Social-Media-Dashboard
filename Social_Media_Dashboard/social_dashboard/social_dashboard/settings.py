@@ -145,6 +145,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# Make Django think it's behind a secure proxy (ngrok)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Force allauth to build secure URLs
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
+
+
 
 CSRF_TRUSTED_ORIGINS = [
     'https://ede304d09519.ngrok-free.app'  # replace with your actual ngrok domain
