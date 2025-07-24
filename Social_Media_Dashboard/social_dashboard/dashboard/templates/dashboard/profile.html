@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -22,7 +22,6 @@
       background: var(--bg-light);
     }
 
-    /* Sidebar */
     .sidebar {
       width: 230px;
       background: var(--sidebar-bg);
@@ -59,7 +58,6 @@
       background: var(--sidebar-hover);
     }
 
-    /* Main Content */
     .main-content {
       margin-left: 250px;
       padding: 40px;
@@ -70,6 +68,7 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
     .profile-header h2 {
@@ -82,12 +81,27 @@
       color: #555;
     }
 
-    /* Card Grid */
+    .profile-pic {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .profile-pic img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+      border: 3px solid var(--primary);
+    }
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 25px;
-      margin-top: 40px;
+      margin-top: 20px;
     }
 
     .card {
@@ -131,7 +145,6 @@
       outline: none;
     }
 
-    /* Buttons */
     .btn-connect {
       background-color: var(--primary);
       color: white;
@@ -177,31 +190,39 @@
 </div>
 
 <div class="main-content">
-  <div class="profile-header">
-    <h2>Welcome, {{ request.user.username }}</h2>
-    <p>Email: {{ request.user.email }}</p>
+
+  <!-- Profile Picture Above Email -->
+  <div class="profile-pic">
+    {% if profile.profile_picture %}
+      <img src="{{ profile.profile_picture.url }}" alt="Uploaded Profile Picture">
+    {% else %}
+      <img src="{% static 'default-user.png' %}" alt="Default Profile Picture">
+    {% endif %}
+    <div>
+      <h2>Welcome, {{ request.user.username }}</h2>
+      <p>Email: {{ request.user.email }}</p>
+    </div>
   </div>
 
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="card-grid">
 
-      <!-- Profile Picture -->
+      <!-- Profile Picture Upload -->
       <div class="card"> 
         <img src="https://www.svgrepo.com/show/408476/user-person-profile-block-account-circle.svg" alt="Profile Icon" style="width: 100px; height: 100px;">
         <h3>Profile Picture</h3>
         <input type="file" name="profile_picture">
       </div>
 
-      <!-- Instagram Login Button -->
-<div class="card">
-  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="60" height="60">
-  <h3>Login with Instagram</h3>
-  <a href="{% url 'social:begin' 'instagram' %}" class="btn-connect">Login with Instagram</a>
-</div>
+      <!-- Instagram Login -->
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="60" height="60">
+        <h3>Login with Instagram</h3>
+        <a href="{% url 'social:begin' 'instagram' %}" class="btn-connect">Login with Instagram</a>
+      </div>
 
-
-      <!-- Facebook Login Button -->
+      <!-- Facebook Login -->
       <div class="card">
         <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook" width="60" height="60">
         <h3>Login with Facebook</h3>
