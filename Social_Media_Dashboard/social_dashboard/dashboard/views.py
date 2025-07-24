@@ -56,7 +56,7 @@ def profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        facebook_key = request.POST.get('facebook_api_key')
+        facebook_key = request.POST.get('EAAZAggnshCJ8BPKmZBNUmt7ZBha0khFTvkc7d8m3y9q1wEjoQE12doG9pbTrVOph9go43XYfjyCq4XsLs0fGJVEDUGCx67wGPWL7Yu5nfDLXS9CduMuv5DJA9mfamUFMpsJV1ZCKFZB3G43YXEpmBCxZBMOjCJ7KhEcvat6ZAjXK0GJcvAsUlCgvWFdGvNCSztCeRMZBgwjmcuEQpbQZC5WcmqvSooDrv64kYqbYP')
         # Instagram API key is removed — using login instead
 
         if facebook_key is not None:
