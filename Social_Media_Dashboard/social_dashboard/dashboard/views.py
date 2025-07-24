@@ -1,26 +1,16 @@
-
-
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
-from django.contrib import messages
-from django.contrib.auth.models import User 
-from django.contrib.auth import login
-from .models import Profile
-from django.contrib.auth import logout
-import requests
-from .sanitizer import sanitize_post_data
 from django.http import JsonResponse
-from .models import Post
+import requests
 
+from .models import Profile, Post
+from .sanitizer import sanitize_post_data
 
-
-    
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import Profile
 
 # Profile View
 @login_required
