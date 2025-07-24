@@ -147,6 +147,39 @@ def posts_view(request):
     posts = Post.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'dashboard/post.html', {'posts': posts})
 
+
+# Handle and Store the Access Token
+@login_required
+def facebook_callback(request):
+    code = request.GET.get('code')
+    if not code:
+        return redirect('dashboard')
+
+    fb_app_id = '1794963388041375'
+    fb_app_secret = '57b70aada8a31a23320bd22f0bda3152T'
+    redirect_uri = 'https://yourdomain.com/facebook/callback/'
+
+    # Exchange code for access token
+    token_url = (
+        f'https://graph.facebook.com/v19.0/oauth/access_token?client_id={fb_app_id}'
+        f'&redirect_uri={redirect_uri}&client_secret={fb_app_secret}&code={code}'
+    )
+
+    response = requests.get(token_url)
+    data = response.json()
+    access_token = data.get('EAAZAggnshCJ8BPLoNE6zRx6uUJ6RvHI6zwTFcW0Q058EAF6575XhJT27BUMDVKuHzIk6lw04FL7zntp8gtyg2tYGgUUxODNNSKK2KBfVJKhdGZAh0eVDO1xvRVj3YJBkKGXfQRgFcyo4Y7UhIwXXtuGyOm4kEduMZCv4E8IqrG14tymZCxr1aGFiDvXAMHRywZBO1ZCmGtpZCtYAm0dcWCCrZCwe7gOjoZCoatEbl')
+
+    if access_token:
+        profile = request.user.profile
+        profile.facebook_access_token = access_token
+        profile.save()
+
+    return redirect('dashboard')
+
+
+
+
+
 # ✅ Fetch Social Posts (Instagram + Facebook API)
 @login_required
 def fetch_social_posts(request):
