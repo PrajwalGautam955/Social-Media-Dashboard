@@ -46,9 +46,31 @@ def register(request):
     return render(request, 'dashboard/register.html', {'form': form})
 
 # ✅ Dashboard View
-@login_required
 def dashboard_view(request):
-    return render(request, 'dashboard/dashboard.html')
+    profile = Profile.objects.get(user=request.user)
+    fb_posts = []
+
+    if profile.facebook_token:
+        try:
+            # Fetch posts with likes and comments
+            response = requests.get(
+                'https://graph.facebook.com/v18.0/me/posts',
+                params={
+                    'fields': 'message,created_time,full_picture,comments.summary(true),likes.summary(true)',
+                    'access_token': profile.facebook_token
+                }
+            )
+
+            if response.status_code == 200:
+                fb_posts = response.json().get('data', [])
+            else:
+                print("Facebook API Error:", response.json())
+        except Exception as e:
+            print("Error fetching posts:", str(e))
+
+    return render(request, 'dashboard/dashboard.html', {
+        'fb_posts': fb_posts
+    })
 
 
 # ✅ Profile View
