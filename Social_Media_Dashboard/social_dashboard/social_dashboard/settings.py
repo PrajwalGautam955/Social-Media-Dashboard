@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',  
-    'social_dashboard.pipeline.save_facebook_token,
+    'social_dashboard.pipeline.save_facebook_token',
 ]
 
 
