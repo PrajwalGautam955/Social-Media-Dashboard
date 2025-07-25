@@ -12,6 +12,14 @@ import requests
 from .models import Profile, Post
 from .sanitizer import sanitize_post_data
 
+
+from django.shortcuts import redirect
+from .models import Profile
+# from django.shortcuts import redirect
+# from django.contrib.auth.decorators import login_required
+from .models import Profile
+# import requests
+
 # ✅ Facebook Token Check
 def check_facebook_connection(access_token):
     url = 'https://graph.facebook.com/v18.0/me'
@@ -177,26 +185,32 @@ def posts_view(request):
 
 # Handle and Store the Access Token
 
-from django.shortcuts import redirect
-from .models import Profile
 
-def facebook_callback(request):
+
+@login_required
+def facebook_callback(request): 
     code = request.GET.get('code')
+
     if code:
-        # Exchange code for token
         access_token_url = 'https://graph.facebook.com/v18.0/oauth/access_token'
         params = {
             'client_id': 'YOUR_FACEBOOK_APP_ID',
-            'redirect_uri': 'https://yourdomain.com/complete/facebook/',
+            'redirect_uri': 'https://your-ngrok-url.ngrok-free.app/complete/facebook/',  # ✅ MUST match redirect URI set in Facebook App settings
             'client_secret': 'YOUR_FACEBOOK_APP_SECRET',
             'code': code,
         }
-        r = requests.get(access_token_url, params=params)
-        access_token = r.json().get('access_token')
-        if access_token:
-            profile, _ = Profile.objects.get_or_create(user=request.user)
-            profile.facebook_token = access_token
-            profile.save()
+        response = requests.get(access_token_url, params=params)
+
+        if response.status_code == 200:
+            access_token = response.json().get('access_token')
+
+            if access_token:
+                profile, _ = Profile.objects.get_or_create(user=request.user)
+                profile.facebook_token = access_token
+                profile.save()
+        else:
+            print("Facebook token exchange failed:", response.json())
+
     return redirect("dashboard")
 
 
