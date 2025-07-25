@@ -149,7 +149,10 @@ def posts_view(request):
 
 
 # Handle and Store the Access Token
-# @login_required
+
+
+
+@login_required
 
 def facebook_callback(request):
     code = request.GET.get('code')
