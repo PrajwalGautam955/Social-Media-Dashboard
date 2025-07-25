@@ -6,8 +6,7 @@ class Profile(models.Model):
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     twitter_api_key = models.CharField(max_length=255, null=True, blank=True)
     facebook_api_key = models.CharField(max_length=255, null=True, blank=True)
-    # facebook_token = models.TextField(null=True, blank=True)
-    facebook_token = models.CharField(max_length=500, blank=True, null=True)
+    facebook_token = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
