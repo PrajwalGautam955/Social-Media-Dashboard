@@ -25,5 +25,6 @@ urlpatterns = [
     path('', include('social_django.urls', namespace='prajwalsocial')),
     path('auth/', include('social_django.urls', namespace='prajwalsocial')),
 
-    path('accounts/facebook/login/callback/', views.facebook_callback, name='facebookCallback'),
+    path("complete/facebook/", views.facebook_callback, name="facebook_callback"),
+    # path('accounts/facebook/login/callback/', views.facebook_callback, name='facebookCallback'),
 ]
