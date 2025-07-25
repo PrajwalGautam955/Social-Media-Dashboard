@@ -54,9 +54,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',  
-    'dashboard.pipeline.save_facebook_token',
 ]
-
+SOCIAL_AUTH_PIPELINE = (
+    # existing pipeline steps...
+    'dashboard.pipeline.save_facebook_token',  # ✅ correct!
+)
 
 ROOT_URLCONF = 'social_dashboard.urls'
 
