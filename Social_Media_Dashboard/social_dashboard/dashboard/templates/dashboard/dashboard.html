@@ -2,40 +2,43 @@
 <div class="fb-posts" style="margin-top: 60px;">
   <h2 style="font-size: 26px; color: #1e3a8a; margin-bottom: 20px;">📘 Your Facebook Posts</h2>
 
-  {% if fb_posts %}
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
-      {% for post in fb_posts %}
-        <div style="
-          background: #ffffff;
-          border-radius: 14px;
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-          padding: 20px;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          cursor: pointer;
-        " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.08)';"
-           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.05)';">
+  <!-- If posts exist -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
+    
+    <!-- Post 1 -->
+    <div style="
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;"
+      onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.08)';"
+      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.05)';">
+      
+      <img src="https://example.com/sample-image.jpg" alt="Post Image"
+           style="width: 100%; height: auto; border-radius: 10px; margin-bottom: 15px;">
+      
+      <p style="font-size: 16px; color: #333; margin-bottom: 10px;">
+        📄 <strong>Message:</strong> Feeling loved.
+      </p>
 
-          {% if post.full_picture %}
-            <img src="{{ post.full_picture }}" alt="Post Image"
-                 style="width: 100%; height: auto; border-radius: 10px; margin-bottom: 15px;">
-          {% endif %}
+      <p style="font-size: 14px; color: #666;">
+        🕒 <strong>Posted:</strong> July 25, 2025 – 5:27 PM
+      </p>
 
-          <p style="font-size: 16px; color: #333; margin-bottom: 10px;">
-            📄 <strong>Message:</strong> {{ post.message|default:"(No text content)" }}
-          </p>
-
-          <p style="font-size: 14px; color: #666;">
-            🕒 <strong>Posted:</strong> {{ post.created_time|date:"F j, Y – g:i A" }}
-          </p>
-
-          <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 14px; color: #555;">
-            <span>❤️ <strong>Likes:</strong> {{ post.likes.summary.total_count|default:"0" }}</span>
-            <span>💬 <strong>Comments:</strong> {{ post.comments.summary.total_count|default:"0" }}</span>
-          </div>
-        </div>
-      {% endfor %}
+      <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 14px; color: #555;">
+        <span>❤️ <strong>Likes:</strong> 18</span>
+        <span>💬 <strong>Comments:</strong> 4</span>
+      </div>
     </div>
-  {% else %}
-    <p style="color: #888;">🚫 No posts available or Facebook is not connected.</p>
-  {% endif %}
+
+    <!-- More posts can be added similarly -->
+
+  </div>
+
+  <!-- If no posts are available -->
+  <!--
+  <p style="color: #888;">🚫 No posts available or Facebook is not connected.</p>
+  -->
 </div>
