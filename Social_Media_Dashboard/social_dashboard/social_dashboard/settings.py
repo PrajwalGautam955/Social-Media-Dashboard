@@ -53,7 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',  # ✅ Corrected line
+    'social_django.middleware.SocialAuthExceptionMiddleware',  
+    'your_app.pipeline.save_facebook_token',
 ]
 
 
