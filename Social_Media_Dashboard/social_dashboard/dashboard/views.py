@@ -56,14 +56,20 @@ def dashboard_view(request):
             fb_response = requests.get(
                 f"https://graph.facebook.com/v18.0/me/posts?fields=message,created_time,full_picture,comments.summary(true),likes.summary(true)&access_token={profile.facebook_token}"
             )
+
+            print("FB Status:", fb_response.status_code)
+            print("FB Raw Response:", fb_response.text)  # 👈 Add this
+
             if fb_response.status_code == 200:
-                fb_posts = fb_response.json().get('data', [])
+                fb_data = fb_response.json()
+                fb_posts = fb_data.get('data', [])
         except Exception as e:
             print("Facebook fetch error:", e)
 
     return render(request, 'dashboard/dashboard.html', {
         'fb_posts': fb_posts
     })
+
 
 
 # ✅ Profile View
