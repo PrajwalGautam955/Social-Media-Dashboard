@@ -1,34 +1,16 @@
- <!-- templates/dashboard.html -->
-<div class="fb-posts" style="margin-top: 60px;">
-  <h2 style="font-size: 26px; color: #1e3a8a; margin-bottom: 20px;">📘 Your Facebook Posts</h2>
-
-  {% if fb_posts %}
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
-    {% for post in fb_posts %}
-    <div style="background: #fff; border-radius: 14px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); padding: 20px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-         onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.08)';"
-         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.05)';">
+<h2>Your Facebook Posts</h2>
+<div class="fb-posts">
+  {% for post in fb_posts %}
+    <div class="post-card">
+      <p><strong>Posted On:</strong> {{ post.created_time }}</p>
+      <p><strong>Message:</strong> {{ post.message|default:"(No message)" }}</p>
 
       {% if post.full_picture %}
-      <img src="{{ post.full_picture }}" alt="Post Image" style="width: 100%; height: auto; border-radius: 10px; margin-bottom: 15px;">
+        <img src="{{ post.full_picture }}" alt="Post Image" style="max-width: 100%; height: auto;">
       {% endif %}
 
-      <p style="font-size: 16px; color: #333; margin-bottom: 10px;">
-        📄 <strong>Message:</strong> {{ post.message|default:"(No message)" }}
-      </p>
-
-      <p style="font-size: 14px; color: #666;">
-        🕒 <strong>Posted:</strong> {{ post.created_time|date:"F d, Y – H:i A" }}
-      </p>
-
-      <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 14px; color: #555;">
-        <span>❤️ <strong>Likes:</strong> {{ post.likes.summary.total_count }}</span>
-        <span>💬 <strong>Comments:</strong> {{ post.comments.summary.total_count }}</span>
-      </div>
+      <p><strong>Likes:</strong> {{ post.likes.summary.total_count }}</p>
+      <p><strong>Comments:</strong> {{ post.comments.summary.total_count }}</p>
     </div>
-    {% endfor %}
-  </div>
-  {% else %}
-  <p style="color: #888;">🚫 No posts available or Facebook is not connected.</p>
-  {% endif %}
+  {% endfor %}
 </div>
