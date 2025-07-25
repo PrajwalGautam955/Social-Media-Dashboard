@@ -168,36 +168,27 @@ def posts_view(request):
 
 # Handle and Store the Access Token
 
-@login_required
+from django.shortcuts import redirect
+from .models import Profile
+
 def facebook_callback(request):
     code = request.GET.get('code')
-    if not code:
-        return redirect('dashboard')
-
-    fb_app_id = '1794963388041375'
-    fb_app_secret = '57b70aada8a31a23320bd22f0bda3152'
-    redirect_uri = 'https://4452fd77b442.ngrok-free.app/accounts/facebook/login/callback/'  # 👈 Use your actual redirect URL
-
-    # Exchange code for access token
-    token_url = (
-        f'https://graph.facebook.com/v19.0/oauth/access_token?client_id={fb_app_id}'
-        f'&redirect_uri={redirect_uri}&client_secret={fb_app_secret}&code={code}'
-    )
-
-    response = requests.get(token_url)
-    data = response.json()
-    access_token = data.get('access_token')
-
-    if access_token:
-        profile, _ = Profile.objects.get_or_create(user=request.user)
-        profile.facebook_token = access_token  # ✅ Save to the correct field
-        profile.save()
-        messages.success(request, "Facebook account connected successfully!")
-    else:
-        messages.error(request, "Failed to retrieve Facebook access token.")
-
-    return redirect('dashboard')
-
+    if code:
+        # Exchange code for token
+        access_token_url = 'https://graph.facebook.com/v18.0/oauth/access_token'
+        params = {
+            'client_id': 'YOUR_FACEBOOK_APP_ID',
+            'redirect_uri': 'https://yourdomain.com/complete/facebook/',
+            'client_secret': 'YOUR_FACEBOOK_APP_SECRET',
+            'code': code,
+        }
+        r = requests.get(access_token_url, params=params)
+        access_token = r.json().get('access_token')
+        if access_token:
+            profile, _ = Profile.objects.get_or_create(user=request.user)
+            profile.facebook_token = access_token
+            profile.save()
+    return redirect("dashboard")
 
 
 
