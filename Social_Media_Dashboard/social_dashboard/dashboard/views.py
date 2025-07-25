@@ -46,31 +46,35 @@ def register(request):
     return render(request, 'dashboard/register.html', {'form': form})
 
 # ✅ Dashboard View
+import requests
+from django.contrib.auth.decorators import login_required
+from .models import Profile
+
+@login_required
 def dashboard_view(request):
     profile = Profile.objects.get(user=request.user)
     fb_posts = []
 
     if profile.facebook_token:
         try:
-            # Fetch posts with likes and comments
-            response = requests.get(
-                'https://graph.facebook.com/v18.0/me/posts',
+            fb_response = requests.get(
+                "https://graph.facebook.com/v18.0/me/posts",
                 params={
-                    'fields': 'message,created_time,full_picture,comments.summary(true),likes.summary(true)',
-                    'access_token': profile.facebook_token
+                    "fields": "message,created_time,full_picture,comments.summary(true),likes.summary(true)",
+                    "access_token": profile.facebook_token
                 }
             )
 
-            if response.status_code == 200:
-                fb_posts = response.json().get('data', [])
+            if fb_response.status_code == 200:
+                data = fb_response.json()
+                fb_posts = data.get("data", [])
             else:
-                print("Facebook API Error:", response.json())
-        except Exception as e:
-            print("Error fetching posts:", str(e))
+                print("Facebook API error:", fb_response.text)
 
-    return render(request, 'dashboard/dashboard.html', {
-        'fb_posts': fb_posts
-    })
+        except Exception as e:
+            print("Error fetching Facebook data:", str(e))
+
+    return render(request, "dashboard.html", {"fb_posts": fb_posts})
 
 
 # ✅ Profile View
