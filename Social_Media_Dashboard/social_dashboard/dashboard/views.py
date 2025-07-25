@@ -48,7 +48,23 @@ def register(request):
 # ✅ Dashboard View
 @login_required
 def dashboard_view(request):
-    return render(request, 'dashboard/dashboard.html')
+    profile = Profile.objects.get(user=request.user)
+    fb_posts = []
+
+    if profile.facebook_token:
+        try:
+            fb_response = requests.get(
+                f"https://graph.facebook.com/v18.0/me/posts?fields=message,created_time,full_picture,comments.summary(true),likes.summary(true)&access_token={profile.facebook_token}"
+            )
+            if fb_response.status_code == 200:
+                fb_posts = fb_response.json().get('data', [])
+        except Exception as e:
+            print("Facebook fetch error:", e)
+
+    return render(request, 'dashboard/dashboard.html', {
+        'fb_posts': fb_posts
+    })
+
 
 # ✅ Profile View
 @login_required
@@ -150,18 +166,15 @@ def posts_view(request):
 
 # Handle and Store the Access Token
 
-
-
 @login_required
-
 def facebook_callback(request):
     code = request.GET.get('code')
     if not code:
         return redirect('dashboard')
 
     fb_app_id = '1794963388041375'
-    fb_app_secret = '57b70aada8a31a23320bd22f0bda3152T'
-    redirect_uri = 'https://yourdomain.com/facebook/callback/'
+    fb_app_secret = '57b70aada8a31a23320bd22f0bda3152'
+    redirect_uri = 'https://4452fd77b442.ngrok-free.app/accounts/facebook/login/callback/'  # 👈 Use your actual redirect URL
 
     # Exchange code for access token
     token_url = (
@@ -170,17 +183,19 @@ def facebook_callback(request):
     )
 
     response = requests.get(token_url)
-    print("access token:" , response)
     data = response.json()
-    access_token = data.get('EAAZAggnshCJ8BPLoNE6zRx6uUJ6RvHI6zwTFcW0Q058EAF6575XhJT27BUMDVKuHzIk6lw04FL7zntp8gtyg2tYGgUUxODNNSKK2KBfVJKhdGZAh0eVDO1xvRVj3YJBkKGXfQRgFcyo4Y7UhIwXXtuGyOm4kEduMZCv4E8IqrG14tymZCxr1aGFiDvXAMHRywZBO1ZCmGtpZCtYAm0dcWCCrZCwe7gOjoZCoatEbl')
+    access_token = data.get('access_token')
 
     if access_token:
-        profile = request.user.profile
-        profile.facebook_access_token = access_token
+        profile, _ = Profile.objects.get_or_create(user=request.user)
+        profile.facebook_token = access_token  # ✅ Save to the correct field
         profile.save()
+        messages.success(request, "Facebook account connected successfully!")
+    else:
+        messages.error(request, "Failed to retrieve Facebook access token.")
 
     return redirect('dashboard')
-    
+
 
 
 
