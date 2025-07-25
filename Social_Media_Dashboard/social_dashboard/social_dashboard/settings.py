@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-hef#ovi&3#9ssomu$ud(=^xnvdo@%=o6fs&)mwo(&aybg#j^&+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['13.48.149.223','af90271d28d4.ngrok-free.app']
+ALLOWED_HOSTS = ['13.48.149.223','75d175947366.ngrok-free.app']
 
 
 LOGIN_REDIRECT_URL = '/dashboard/'
@@ -155,7 +155,7 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://af90271d28d4.ngrok-free.app'  # replace with your actual ngrok domain
+    'https://75d175947366.ngrok-free.app'  # replace with your actual ngrok domain
     # 'https://your-ec2-public-dns',     # if you’re using EC2 public URL
 ]
 
