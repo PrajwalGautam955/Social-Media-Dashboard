@@ -48,24 +48,7 @@ def register(request):
 # ✅ Dashboard View
 @login_required
 def dashboard_view(request):
-    profile = Profile.objects.get(user=request.user)
-    fb_posts = []
-
-    if profile.facebook_token:
-        try:
-            url = "https://graph.facebook.com/v18.0/me/posts"
-            params = {
-                "fields": "message,created_time,full_picture,comments.summary(true),likes.summary(true)",
-                "access_token": profile.facebook_token,
-            }
-            response = requests.get(url, params=params)
-            data = response.json()
-            fb_posts = data.get("data", [])
-        except Exception as e:
-            print("Facebook API Error:", e)
-
-    return render(request, "dashboard.html", {"fb_posts": fb_posts})
-
+    return render(request, 'dashboard/dashboard.html')
 
 
 # ✅ Profile View
