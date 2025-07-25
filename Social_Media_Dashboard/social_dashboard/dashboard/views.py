@@ -82,7 +82,7 @@ def dashboard_view(request):
         except Exception as e:
             print("Error fetching Facebook data:", str(e))
 
-    return render(request, "dashboard.html", {"fb_posts": fb_posts})
+    return render(request, "dashboard/dashboard.html", {"fb_posts": fb_posts})
 
 
 # ✅ Profile View
